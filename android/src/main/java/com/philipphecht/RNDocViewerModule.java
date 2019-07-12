@@ -395,6 +395,15 @@ public class RNDocViewerModule extends ReactContextBaseJavaModule {
         String extension = MimeTypeMap.getFileExtensionFromUrl(url);
         if (extension != null) {
             mimeType = MimeTypeMap.getSingleton().getMimeTypeFromExtension(extension);
+
+            /**
+             * 兼容中文名
+             * 截取文件后缀
+             */
+            if (mimeType == null) {
+                extension = url.substring(url.lastIndexOf(".") + 1, url.length());
+                mimeType = MimeTypeMap.getSingleton().getMimeTypeFromExtension(extension);
+            }
         }
 
         if (mimeType == null) {
